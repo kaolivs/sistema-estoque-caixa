@@ -1,0 +1,110 @@
+<nav class="navbar navbar-dark bg-dark mb-4 shadow-sm">
+  <div class="container">
+    <span class="navbar-brand mb-0 h1">
+      📦 Gestão de Estoque & Caixa
+    </span>
+    <span class="text-light small">Versão 1.0</span>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="row">
+    
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0 mb-4">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">Novo Produto</h5>
+        </div>
+        <div class="card-body">
+          <form (ngSubmit)="salvarProduto()">
+            
+            <div class="mb-3">
+              <label class="form-label">Nome do Produto</label>
+              <input type="text" class="form-control" [(ngModel)]="novoProduto.nome" name="nome" placeholder="Ex: Teclado USB" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Categoria</label>
+              <select class="form-select" [(ngModel)]="novoProduto.categoria" name="categoria">
+                <option value="">Selecione...</option>
+                <option value="Eletrônicos">Eletrônicos</option>
+                <option value="Alimentos">Alimentos</option>
+                <option value="Limpeza">Limpeza</option>
+                <option value="Outros">Outros</option>
+              </select>
+            </div>
+
+            <div class="row">
+              <div class="col-6 mb-3">
+                <label class="form-label">Qtd.</label>
+                <input type="number" class="form-control" [(ngModel)]="novoProduto.quantidade" name="qtd" min="0">
+              </div>
+              <div class="col-6 mb-3">
+                <label class="form-label">Preço (R$)</label>
+                <input type="number" class="form-control" [(ngModel)]="novoProduto.preco" name="preco" step="0.01">
+              </div>
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-success btn-lg">
+                + Cadastrar Item
+              </button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <div class="card shadow-sm border-0">
+        <div class="card-header bg-white border-bottom">
+          <h5 class="mb-0 text-secondary">Inventário Atual</h5>
+        </div>
+        <div class="card-body p-0">
+          
+          <table class="table table-hover mb-0 table-striped">
+            <thead class="table-light">
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Produto</th>
+                <th scope="col">Categoria</th>
+                <th scope="col" class="text-center">Estoque</th>
+                <th scope="col" class="text-end">Preço</th>
+                <th scope="col" class="text-center">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let p of produtos">
+                <td class="text-muted">#{{ p.id }}</td>
+                <td class="fw-bold">{{ p.nome }}</td>
+                <td>
+                  <span class="badge bg-secondary">{{ p.categoria }}</span>
+                </td>
+                <td class="text-center">
+                  <span [class.text-danger]="p.quantidade < 5" [class.text-success]="p.quantidade >= 5">
+                    {{ p.quantidade }} un
+                  </span>
+                </td>
+                <td class="text-end text-success fw-bold">R$ {{ p.preco | number:'1.2-2' }}</td>
+                <td class="text-center">
+                  <button class="btn btn-outline-danger btn-sm" (click)="deletarProduto(p.id)" title="Excluir">
+                    🗑
+                  </button>
+                </td>
+              </tr>
+              
+              <tr *ngIf="produtos.length === 0">
+                <td colspan="6" class="text-center py-4 text-muted">
+                  Nenhum produto cadastrado no sistema.
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

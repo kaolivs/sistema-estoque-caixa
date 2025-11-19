@@ -1,0 +1,11 @@
+@import "~bootstrap/dist/css/bootstrap.min.css";
+
+body {
+    background-color: #f4f6f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.table th {
+    font-weight: 600;
+    color: #495057;
+}
